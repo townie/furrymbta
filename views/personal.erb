@@ -21,7 +21,7 @@
 
         var isIE8 = window.XDomainRequest ? true : false;
         var invocation = createCrossDomainRequest();
-        var url = 'http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=5337';
+         // var url = 'http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=5337';
 
         function createCrossDomainRequest(url, handler)
         {
@@ -106,7 +106,7 @@
 
         <form id="controlsToInvoke" action="">
             <p>
-                <input type="button" value="Going To Work" onclick="callOtherDomain('http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=5337')" />
+                <input type="button" value="Going To Work" onclick="callOtherDomain('http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=02849&routeTag=93')" />
             </p>
         </form>
 
@@ -124,9 +124,7 @@
         </form>
 
         <h3> Time to next bus Haymarket Minutes</h3>
-        <div id="textDiv">
-            The bus route needs to go here
-        </div>
+
     </div>
 </div>
 
