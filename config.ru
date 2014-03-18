@@ -1,2 +1,2 @@
-require './personal'
+require './personalmbta'
 run Sinatra::Application
