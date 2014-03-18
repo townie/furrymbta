@@ -1,2 +1,2 @@
-require './personalmbta'
+require './server.rb'
 run Sinatra::Application
