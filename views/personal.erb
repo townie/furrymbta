@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Test</title>
+
+
+  <!-- If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/foundation.css">
+
+  <!-- If you are using the gem version, you need this only -->
+
+  <script src="js/vendor/modernizr.js"></script>
+    <script  src="jquery.js"></script>
+  </head>
+
+  <body>
+
+
+    <script type="text/javascript">
+
+        var isIE8 = window.XDomainRequest ? true : false;
+        var invocation = createCrossDomainRequest();
+        var url = 'http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=5337';
+
+        function createCrossDomainRequest(url, handler)
+        {
+            var request;
+            if (isIE8)
+            {
+                request = new window.XDomainRequest();
+            }
+            else
+            {
+
+                request = new XMLHttpRequest();
+                console.log('created the frist request');
+            }
+            return request;
+        }
+
+        function callOtherDomain(url)
+        {
+            if (invocation)
+            {
+                if(isIE8)
+                {
+                    invocation.onload = outputResult;
+                    invocation.open("GET", url, true);
+                    invocation.send();
+                }
+                else
+                {
+                    console.log('called other domain');
+                    invocation.open('GET', url, true);
+                    invocation.onreadystatechange = handler;
+                    invocation.send();
+                }
+            }
+            else
+            {
+                var text = "No Invocation TookPlace At All";
+                var textNode = document.createTextNode(text);
+                var textDiv = document.getElementById("textDiv");
+                textDiv.appendChild(textNode);
+            }
+        }
+
+        function handler(evtXHR)
+        {
+            if (invocation.readyState == 4)
+            {
+              console.log(invocation.readyState);
+              console.log(invocation.status);
+                if (invocation.status == 200)
+                {
+                    outputResult();
+                }
+                else
+                {
+                    console.log(invocation.status);
+                    alert("Invocation Errors Occured");
+                }
+            }
+        }
+
+        function outputResult()
+        {
+            var response = invocation.responseText;
+            var responseDoc = $.parseXML(response);
+            var $xml = $(responseDoc);
+            var predic = $xml.find('prediction');
+            var nextOccurance = predic.first();
+            $('#textDiv').html( nextOccurance.attr('minutes'));
+
+        }
+
+
+
+    </script>
+
+    <h1>Get Your Self To Work</h1>
+
+<div class="row">
+    <div class="small-12 large-6 columns">
+
+        <form id="controlsToInvoke" action="">
+            <p>
+                <input type="button" value="Going To Work" onclick="callOtherDomain('http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=5337')" />
+            </p>
+        </form>
+
+        <h3> Time to next bus Ctown Minutes</h3>
+        <div id="textDiv">
+            The bus route needs to go here
+        </div>
+        <br />
+    </div>
+    <div class="small-12 large-6 columns">
+      <form id="controlsToInvoke" action="">
+            <p>
+                <input type="button" value="Going Home" onclick="callOtherDomain('http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=mbta&stopId=30203&routeTag=93')" />
+            </p>
+        </form>
+
+        <h3> Time to next bus Haymarket Minutes</h3>
+        <div id="textDiv">
+            The bus route needs to go here
+        </div>
+    </div>
+</div>
+
+
+      <script src="js/vendor/jquery.js"></script>
+  <script src="js/foundation.min.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+  </body>
+</html>
